@@ -51,8 +51,8 @@ public class TaskSolver {
     private boolean isSubSeries(final int[] subSeries_i) {
         int positionInMainSeries = 0;
         int subSeriesLength_i = subSeries_i.length;
-        for (int k = 0; k < subSeriesLength_i; k++) {
-            positionInMainSeries = findFirstBigger(indices[subSeries_i[k]], positionInMainSeries);
+        for (final int k : subSeries_i) {
+            positionInMainSeries = findFirstBigger(indices[k], positionInMainSeries);
             if (-1 == positionInMainSeries) return false;
         }
         return true;
