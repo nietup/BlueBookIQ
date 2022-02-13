@@ -3,16 +3,16 @@ package blue.book.iq;
 public class TaskSolver {
     /*
     input
-    m - length of the main series
-    1 <= m <= 1M
-    a_1, ..., a_m - main series
-    1 <= a_i <= 1M
-    n - sub-series count
-    m_i - ith sub-series length
-    1 <= m_i <= 1M
-    b_i1, ..., b_im_i - ith sub-series
-    1 <= b_ij <= 1M
-    1 <= sum m_i <= 1M
+    mainSeriesLength - length of the main series
+    1 <= mainSeriesLength <= 1M
+    mainSeries_1, ..., mainSeries_m - main series
+    1 <= mainSeries_i <= 1M
+    subSeriesCount - sub-series count
+    subSeriesLength_i - ith sub-series length
+    1 <= subSeriesLength_i <= 1M
+    subSeries_i1, ..., subSeries_i,subSeriesLength_i - ith sub-series
+    1 <= subSeries_ij <= 1M
+    1 <= sum subSeriesLength_i <= 1M
 
     input example
     7
@@ -37,35 +37,38 @@ public class TaskSolver {
     NO
 
     notation
-    len - sum m_i
-    s - biggest value in all series
-    S - {1, ..., s}
-    c - element of S
-    l_c - indices of occurrences of c in a
+    allSubSeriesLength - sum subSeriesLength_i
+    maxValue - biggest value in all series
+    possibleValues - {1, ..., maxValue}
+    value - element of possibleValues
+    indices_value - indices of occurrences of possibleValue in mainSeries
+
+
      */
 
-    private int[][] l;
+    private int[][] indices;
 
-    private boolean isSubSeries(final int[] b_i, final int m_i) {
-        int j = 0;
-        for (int k = 0; k < m_i; k++) {
-            j = findFirstBigger(l[b_i[k]], j);
-            if (-1 == j) return false;
+    private boolean isSubSeries(final int[] subSeries_i) {
+        int positionInMainSeries = 0;
+        int subSeriesLength_i = subSeries_i.length;
+        for (int k = 0; k < subSeriesLength_i; k++) {
+            positionInMainSeries = findFirstBigger(indices[subSeries_i[k]], positionInMainSeries);
+            if (-1 == positionInMainSeries) return false;
         }
         return true;
     }
 
-    private int findFirstBigger(int[] l_c, int j) {
+    private int findFirstBigger(int[] indices_value, int currentIndex) {
         int left = 0;
-        int right = l_c.length;
+        int right = indices_value.length;
         while (left < right) {
             int mid = (left + right) / 2;
-            if (l_c[mid] <= j) {
+            if (indices_value[mid] <= currentIndex) {
                 left = mid + 1;
             } else {
                 right = mid;
             }
         }
-        return l_c[left] > j ? l_c[left] : -1;
+        return indices_value[left] > currentIndex ? indices_value[left] : -1;
     }
 }
