@@ -43,14 +43,15 @@ public class TaskSolver {
     value - element of possibleValues
     indices_value - indices of occurrences of possibleValue in mainSeries
 
-
+    analysis
+    for each possible value create array 'indices' with complexity O(n)
+    then for each substring for each value use binary search (O(log n)) and update progress in the main series
      */
 
     private int[][] indices;
 
     private boolean isSubSeries(final int[] subSeries_i) {
         int positionInMainSeries = 0;
-        int subSeriesLength_i = subSeries_i.length;
         for (final int k : subSeries_i) {
             positionInMainSeries = findFirstBigger(indices[k], positionInMainSeries);
             if (-1 == positionInMainSeries) return false;
