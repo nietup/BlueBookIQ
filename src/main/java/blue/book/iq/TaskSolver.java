@@ -44,7 +44,7 @@ public class TaskSolver {
     l_c - indices of occurrences of c in a
      */
 
-    private int l[][];
+    private int[][] l;
 
     private boolean isSubSeries(final int[] b_i, final int m_i) {
         int j = 0;
@@ -56,6 +56,16 @@ public class TaskSolver {
     }
 
     private int findFirstBigger(int[] l_c, int j) {
-        throw new RuntimeException("Implement me!");
+        int left = 0;
+        int right = l_c.length;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (l_c[mid] <= j) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return l_c[left] > j ? l_c[left] : -1;
     }
 }
